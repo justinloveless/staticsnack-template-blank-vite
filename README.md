@@ -7,7 +7,7 @@ A minimal starter template for building static websites with JSON-based content 
 - **JSON-Based Content Management** - Define and manage your site's assets through a simple JSON configuration
 - **Dynamic Asset Loading** - Automatically load and handle images, JSON data, markdown, and more
 - **Modular Architecture** - Extensible handler system for custom asset processing
-- **Zero Build Step** - Uses native ES modules for immediate development
+- **Vite-Powered Build** - Fast development server with HMR and optimized production builds
 - **Type Support** - Works with images, JSON, text, markdown, and directory-based assets
 - **Handler System** - Custom handlers for asset-specific rendering logic
 
@@ -15,39 +15,53 @@ A minimal starter template for building static websites with JSON-based content 
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v20.19+ or v22.12+)
 - npm or yarn
 
 ### Installation
 
 ```bash
 npm install
-npm run init
 ```
 
 ### Development
 
-Simply open `index.html` in a modern browser or use a local development server:
+Start the Vite development server with hot module replacement:
 
 ```bash
-# Using Python
-python -m http.server 8000
+npm run dev
+```
 
-# Using Node.js http-server
-npx http-server
+The site will be available at `http://localhost:5173`
 
-# Using VS Code Live Server
-# Install "Live Server" extension and click "Go Live"
+### Build for Production
+
+Build the site to static HTML at the repository root:
+
+```bash
+npm run build
+```
+
+This generates `index.html` and `script.js` at the root, ready for deployment.
+
+### Preview Production Build
+
+Preview the production build locally:
+
+```bash
+npm run preview
 ```
 
 ## Project Structure
 
 ```
 .
-├── index.html           # Main HTML entry point
-├── script.js           # Site initialization script
-├── asset-loader.js     # Generic asset loading module
-├── site-assets.json    # Asset configuration file
+├── src/
+│   ├── index.html         # Main HTML entry point
+│   ├── script.js          # Site initialization script
+│   └── asset-loader.js    # Generic asset loading module
+├── public/
+│   └── site-assets.json   # Asset configuration file
 ├── package.json        # Dependencies and scripts
 └── README.md          # This file
 ```
@@ -102,7 +116,7 @@ npm run add-asset
 Create custom handlers to process and render assets automatically. Handlers are JavaScript modules that export a `handle` function:
 
 ```javascript
-// handlers/content-handler.js
+// src/handlers/content-handler.js
 export function handle(data, path) {
     // Process the loaded data
     console.log('Loaded content from:', path);
@@ -126,6 +140,9 @@ Reference handlers in `site-assets.json`:
 
 | Command | Description |
 |---------|-------------|
+| `npm run dev` | Start Vite development server |
+| `npm run build` | Build for production (outputs to root) |
+| `npm run preview` | Preview production build |
 | `npm run init` | Initialize project and dependencies |
 | `npm run add-asset` | Interactively add a new asset |
 | `npm run generate-schema` | Generate schema documentation |
